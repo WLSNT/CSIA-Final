@@ -1,0 +1,50 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+
+
+        <br>
+        <br>
+
+        <div>
+        <table class="table table-line">
+
+            <thead>
+                <tr>
+                    <td></td>
+                    <td><h1 style = "text-align: center;">Tags</h1></td>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="height: 20px;">
+
+                </tr>   
+                {% for tag in tags %}
+                <tr>
+                    <td style="width:11%; text-align: center;"><input type="radio" name="source" id="source{{ forloop.counter }}" value="{{ tag.id }}"></td>
+
+                    <td style="width:89%; text-align: center;"><h4><a href="/sorter/{{ tag.id }}/tag_contents"> {{ tag.tag_text }}</h4></td>
+                </tr>
+                <tr style="height: 20px;">
+                </tr>   
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+    </form>
+    {% endif %}
+
+{% endblock %}

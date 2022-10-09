@@ -1,0 +1,62 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+    <br>
+    <h3>Folders In With The Tag: {{ tag.tag_text }}<h3>
+    <br>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+
+
+        <div>
+        <table class="table table-line">
+
+            <thead>
+                <tr>
+                    <td style="text-align: center;"><h1>Tags</h1></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="height: 20px;">
+                </tr>   
+                {% for folder in tag_folder_list %}
+
+                <tr>
+                    <td style="text-align: center;"><p2><a href="/sorter/{{ folder.id }}/view/">{{ folder.folder_text }}</a></p2></td>
+
+                    <td style="text-align: center;">
+                        <p1><a class="btn btn-primary" href="/sorter/{{ folder.id }}/view/" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);">Open Folder</a></p1>
+                    </td>
+
+                    <td style="text-align: center;">
+                        <p1><a class="btn btn-primary" href="/sorter/{{ folder.id }}/" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);"> Edit Folder</a></p1>
+                    </td>
+                    <td style="text-align: center; width: 100px;">
+                        {% if folder.is_important %}
+                            <p><a class="btn btn-primary" href="/sorter/{{ folder.id }}/importance_change_folder/{{tag.id}}" style="width: 50px;background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); color: rgb(224, 191, 98);">★</a></p> 
+                        {% else %}
+                        <p><a class="btn btn-primary" href="/sorter/{{ folder.id }}/importance_change_folder/{{tag.id}}" style="width: 50px;background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); color: rgb(37, 37, 37);">☆</a></p>
+                            {% endif %}
+                    </td>
+
+                </tr>
+                <tr style="height: 20px;">
+                </tr>   
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+    </form>
+    {% endif %}
+
+{% endblock %}

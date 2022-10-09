@@ -1,0 +1,101 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container" >
+{% if request.user.is_authenticated %}
+
+    <style>
+    h3 {text-align: center;}
+
+    p1 {
+        display: inline-block;
+        width: 425px;
+        text-align: center;
+        
+        }
+    p2 {
+        display: inline-block;
+        width: 200px;
+        text-align: center;
+        }
+
+
+    </style>
+
+        &nbsp;&nbsp; 
+        <h1>YELLO~ {{ user.username }}</h1>
+        &nbsp;&nbsp; 
+        &nbsp;&nbsp; 
+        &nbsp;&nbsp; 
+
+        <br>
+
+        <a class="btn btn-primary" href="/create_folder/" style="width: 230px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);"">Add New Folder</a>
+
+
+        <br>
+        <br>
+
+            <table class="table table-line">
+                {% if latest_folder_list %}
+                    <div>
+                    <thead>
+                        <td style="text-align: center;"> <b> <font size="+2">Folder</font><b> </td>
+
+
+                        </thead>
+                    <tbody> 
+                    {% for folder in latest_folder_list %}
+                    <tr>
+                        <td style="text-align: center;"><p2><a href="/sorter/{{ folder.id }}/view/">{{folder.folder_text}}</a></p2></td>
+
+                        <td style="text-align: center;">
+                            <p1><a class="btn btn-primary" href="/sorter/{{ folder.id }}/view/" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);">Open Folder</a></p1>
+                        </td>
+
+                        <td style="text-align: center;">
+                            <p1><a class="btn btn-primary" href="/sorter/{{ folder.id }}/" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);"> Edit Folder</a></p1>
+                        </td>
+                        <td style="text-align: center; width: 100px;">
+                            {% if folder.is_important %}
+                                <p><font size="+1"><a class="btn btn-primary" href="/sorter/{{ folder.id }}/importance_change/" style="width: 50px;background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); color: rgb(224, 191, 98);">★</a></p><font>
+                            {% else %}
+                            <p><font size="+1"><a class="btn btn-primary" href="/sorter/{{ folder.id }}/importance_change/" style="width: 50px;background-color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); color: rgb(37, 37, 37);">☆</a></p><font>
+                                {% endif %}
+                        </td>
+
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </div>
+                {% endif %}
+            </tbody>
+            </table>
+
+
+        
+{% else %}
+
+<style>
+    h1 {text-align: center;}
+    p {text-align: center;}
+    </style>
+
+        &nbsp;&nbsp; 
+        <h1>Research Manager</h1>
+        &nbsp;&nbsp; 
+        &nbsp;&nbsp; 
+        &nbsp;&nbsp; 
+
+        <p>A tool to manage and organize all of the knowledge you come accross, allowing you to do your work quickly, efficiently, and freely without the need for stress.<br>
+        </p>
+
+
+
+
+{% endif %}
+        </div>
+{% endblock %}

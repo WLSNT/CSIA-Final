@@ -1,0 +1,97 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+    <br>
+    <h3>Folder Name: {{ folder.folder_text }}<h3>
+    <br>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+
+    <form action="" method="post">
+        <a class="btn btn-primary" href="/sorter/{{folder.id}}/add_source/" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);">Add Source</a>
+        <br>
+        <br>
+
+        <table class="table table-bordered">
+
+        <thead>
+            <tr>
+            <th style="width:11%; text-align: center;" >Selected</th>
+
+            <th style="width:30%; text-align: center;">Sources</th>
+
+            <th style="width:59%; text-align: center;">Description</th>
+            </tr>
+        </thead>
+
+        <tbody> 
+                        
+        {% for source in folder.source_set.all %}
+            <tr>
+                <td style="text-align: center; vertical-align: middle;">
+                    <input type="radio" name="source" id="source{{ forloop.counter }}" value="{{ source.id }}">
+                </td>
+
+                <td style="text-align: center; vertical-align: middle;">
+                    <a href="/polls/{{ source.id }}/view_source/{{ folder.id }}">{{ source.source_text }}</a>
+                </td>
+
+                <td>
+                    {{ source.description }}
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+        </table>
+
+        <br>
+
+        {% csrf_token %}
+        {{form|crispy}}
+
+        <input type="submit" style="color: white; width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);" value="Delete" >
+        <br>
+        <br>
+
+
+
+        
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+
+        <div>
+            <table class="table table-borderless">
+    
+                <thead>
+                    <tr>
+                        <td style="text-align: center;"><h3>Tags</h3></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tag in folder.tags.all %}
+                    <tr>
+
+                        <td style="text-align: center;"><h4><a href="/sorter/{{ tag.id }}/tag_contents"> {{ tag.tag_text }}</h4></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                </div>
+
+    </form>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'sorter/base.html' %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="% static 'sorter/css/bootstrap.css' %">
+
+{% block content %}
+&nbsp;&nbsp;
+<h2>{{ user.username }}'s Profile</h2>
+
+<!-- 
+if ur reading this and wondering what all these &nbsp;&nbsp; are for, i have no idea how to make spacings.... so i found this and made my things look nice :D
+-->
+<style>
+  u1 {
+    display: inline-block;
+    width: 1050px;
+    text-align: left;
+  }
+  td {
+    width: 200px;
+    text-align: right;
+  }
+</style>
+
+<BR>
+
+<div class="form-group">
+  <form method="POST" enctype="multipart/form-data">
+
+
+  <table class="table table-borderless">
+    <tbody>
+    <tr>
+      <td>First Name: </td>
+      <td><u1>{{ user.first_name }}</u1></td>
+    </tr>
+
+    <tr>
+      <td>Last Name:</td> 
+      <td><u1>{{ user.last_name }}</u1></td>
+    </tr>
+
+    <tr>
+      <td>Gender:</td> 
+      <td><u1>{{ user.profile.gender}}</u1></td>
+    </tr>
+
+    <tr>
+      <td>Email: </td>
+      <td><u1>{{ user.email }}</u1></td>
+    </tr>
+
+    <tr>
+      <td>Date Joined: </td>
+      <td><u1>{{ user.date_joined }}</td>
+    </tr>
+
+    <tr>
+      <td>Bio: </td>
+      <td><u1>{{ user.profile.bio }}</u1></td>       
+    </tr>
+
+    {% if request.user.is_staff %}
+
+    <tr>
+      <td>Staff Status: </td>
+      <td><u1>Administrator</u1></td> 
+    </tr>
+
+    {% else %}
+    {% endif %}
+  </tbody>
+
+  </table>
+</div>
+
+
+{% endblock %}

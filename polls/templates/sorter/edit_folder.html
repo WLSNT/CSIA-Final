@@ -1,0 +1,110 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- 
+if ur reading this and wondering what all these &nbsp;&nbsp; are for, i have no idea how to make spacings.... so i found this and made my things look nice :D
+-->
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+    <h1>YELLO {{ user.username }}!</h1>
+    <br>
+    <h2>Edit Your Folder~</h2>
+    <br>
+    <h3>{{ folder.folder_text }}<h3>
+    <br>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+
+    <form action="/sorter/{{ folder.id }}/" method="post">
+    
+        <style>        
+            p1 {
+                display: inline-block;
+                width: 600px;
+                text-align: right;
+                
+                }
+            p2 {
+                display: inline-block;
+                width: 600px;
+                text-align: left;
+                }
+        
+        
+            </style>
+        
+    
+    <table class="table table-line">
+        <tbody> 
+
+    <tr>
+    <td>
+        <p1><label for="foldername">Folder Name: </label></p1>
+    </td>
+    <td>
+        <p2><input id="foldername" type="text" name="foldername" value= "{{ folder.folder_text }}"></p2>
+    </td>
+    </tr>
+
+    <tr>
+    <td>
+        <p1><label for="pubdate">Pub Date: </label></p1>
+    </td>
+    <td>
+        <p2>{{ folder.pub_date|date:'Y-m-d'}}</p2>
+    </td>
+    </tr>
+
+
+    <tr>
+    <td>
+            <p1><label for="creator">Created By: </label></p1>
+        </td>
+        <td>
+            <p2>{{ folder.creator }}</p2>
+    </td>
+    </tr>
+
+
+    </tbody>
+    </table>
+
+
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Save">
+
+
+
+{% for tags in folder.tags.all %}
+        <table class="table table-line">
+            <tbody> 
+        <tr>
+
+            <td>
+                <p2>{{ tags.tag_text }}</p2>
+        </td>
+        </tr>
+    
+    
+        </tbody>
+        </table>
+</div>
+{% endfor %}
+
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+
+        {% endif %}
+    </form>
+    <br>
+        <a class="btn btn-primary" href="/sorter/{{folder.id}}/delete_folder/">Delete</a>
+        {% endif %}
+
+
+{% endblock %}

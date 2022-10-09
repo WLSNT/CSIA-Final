@@ -1,0 +1,50 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- 
+if ur reading this and wondering what all these &nbsp;&nbsp; are for, i have no idea how to make spacings.... so i found this and made my things look nice :D
+-->
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+    <h1 style= "text-align: center;">Delete {{ folder.folder_text }}</h1>
+    <br>
+
+    <style>
+        input {
+            width: 425px;
+            height: 200px;
+            text-align: center;
+        }
+
+        p1 {
+            display: inline-block;
+            width: 425px;
+            text-align: center;
+            }
+
+    
+    
+    </style>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+<div class="text-center">
+
+    <form action="/sorter/{{ folder.id }}/delete_folder/" method="post">
+        
+        {% csrf_token %}
+        {{form|crispy}}
+        <p1><input type="submit" style="font-size: 30px; width: 360px;background-color: mediumslateblue; border-color: rgb(0, 0, 0); color: white;" value="Confirm Deletion"><p1>
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+    </form>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
+

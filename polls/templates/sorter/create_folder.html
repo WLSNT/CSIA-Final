@@ -1,0 +1,46 @@
+{% extends 'sorter/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- 
+if ur reading this and wondering what all these &nbsp;&nbsp; are for, i have no idea how to make spacings.... so i found this and made my things look nice :D
+-->
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <br>
+    <h1>YELLO {{ user.username }}!</h1>
+    <br>
+    <h2>Make A Folder~</h2>
+    <br>
+    <h3>{{ folder.folder_text }}<h3>
+    <br>
+
+<!-- 
+maybe change it one day when i figure out how to align these text fields....-->
+
+    <form action="" method="post">
+        <label for="foldername">Folder Name: </label>
+        <input id="foldername" type="text" name="foldername" value= "{{ folder.folder_text }}" >
+        {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        <br>
+
+        {% csrf_token %}
+        {{form|crispy}}
+        <br>
+
+        {% if submitted %}
+        <input type="submit" value="Create Again" style="width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);">
+        {% else %}
+        <input type="submit" value="Create New" style="color: white; width: 260px;background-color: mediumslateblue; border-color: rgb(141, 58, 189);">
+        {% endif %}
+
+        
+
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
