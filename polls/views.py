@@ -252,6 +252,7 @@ def FolderContentsView(request, pk):
 #page to show the contents of a specified source in a specified folder
 def SourceView(request, pk, pk1):
     new = Source.objects.get(pk=pk) 
+
     try:
         if request.method == "POST":
             data = request.POST
@@ -260,12 +261,15 @@ def SourceView(request, pk, pk1):
             new.set_author(data.get("author"))
             new.set_source(data.get("source_url"))
             new.set_date_published(data.get("date_published"))
+
             return redirect(f'/{pk1}/view/')
+
     except: 
         pass
     return render(request, 'sorter/edit_source.html', {
             "source": new,
         })
+
 
 #page to delete specified folder
 def DeleteFolderView(request, pk): 
